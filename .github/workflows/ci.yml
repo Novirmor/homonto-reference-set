@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  # The homonto commit these packages are tested against. Bump it when homonto
+  # changes the package contract; a contract break fails here first.
+  HOMONTO_REF: ab38ada51eeef4b954c78a271248e416cb9240c8
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26.10"
+      - name: install homonto
+        run: go install "github.com/Novirmor/homonto@${HOMONTO_REF}"
+      - name: package check
+        run: homonto package check ticket-engine ticket-workflow ticket-service
+      - name: smoke
+        run: scripts/smoke.sh local
