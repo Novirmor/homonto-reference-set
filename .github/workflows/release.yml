@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 env:
-  HOMONTO_REF: ab38ada51eeef4b954c78a271248e416cb9240c8
+  HOMONTO_REF: 00bc06a82ba520fa4853a7500ac2f4b6caefa00e
 
 jobs:
   release:
